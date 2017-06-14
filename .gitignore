@@ -1,0 +1,12 @@
+certificate.pem**
+keyValStore-*
+
+# NPM Dependencies
+node_modules
+
+# IntelliJ
+.idea
+
+chaincodeID
+/resources/emailCredentials
+resources/emailCredentials

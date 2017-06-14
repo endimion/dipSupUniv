@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col.l12.m12.col-md-offset-3
+        h3.display-4.m-b-2= title
+    .row
+      .col.l12.md12.col-md-offset-3
+        div.col-m-12=message
+    .row
+      a.btn.btn-primary(href=" http://84.205.248.180/ISSPlus/ValidateToken?t="+token+"&sp=sp1&cc=CA&saml=eIDAS") Login 

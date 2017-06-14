@@ -1,0 +1,16 @@
+extends layout
+
+
+block content
+  .main.container
+    .row
+      .col.l12.m12.col-md-offset-3
+        h3.display-4.m-b-2= title
+    .row
+      .col.s6.m6
+        img(src="/img/Broken-Robot.jpg", style="width:100%")
+      .col.s6.m6
+        .row   
+          p= message
+        .row  
+          a.btn.btn-primary(href="/login") Back 
