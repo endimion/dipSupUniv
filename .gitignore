@@ -10,3 +10,9 @@ node_modules
 chaincodeID
 /resources/emailCredentials
 resources/emailCredentials
+tmp
+/tmp
+chaincodeIDLocalHost
+tmp/keyValStore-*
+tmp/keyValStore/
+tmp/keyValStore
