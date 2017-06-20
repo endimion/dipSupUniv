@@ -24,7 +24,8 @@
     "body-parser": "^1.17.1",
     "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.2",
+    "expres": "0.0.5",
+    "express": "^4.15.3",
     "express-session": "^1.15.3",
     "hash.js": "^1.0.3",
     "hfc": "^0.6.5",
@@ -33,6 +34,7 @@
     "pug": "^2.0.0-rc.1",
     "qr-image": "^3.2.0",
     "randomstring": "^1.1.5",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "uuid": "^3.0.1"
   }
 }
