@@ -13,18 +13,21 @@ router.get('/', function (req, res) {
   // res.send('Hello World from login');
   if(!req.session.userType  && !req.session.eID){
     // res.render('login',{ title: 'Login', message: 'Login to the DiplomaSupplement WebApp' });
-    res.render('login',{ title: 'Login', message: 'Login to the DiplomaSupplement WebApp' })
+    res.render('login',{ title: 'Login', message: 'Login to the DiplomaSupplement WebApp',
+                    base: process.env.BASE_URL })
 
   }else{
     if(req.session.userType === 'University'){
       res.render('univMainView',{ title: 'University Management Page',
       message: 'Welcome user: ' + req.session.eID ,
-      university: req.session.eID});
+      university: req.session.eID,
+      base:process.env.BASE_URL});
     }else{
       if(req.session.userType === 'Student'){
         res.render('stdMainView',{ title: 'Publish a new Diploma Supplement',
         message: 'Welcome user: ' + req.session.eID ,
-        stdId: req.session.eID});
+        stdId: req.session.eID,
+        base:process.env.BASE_URL});
       }
     }
   }
@@ -41,7 +44,8 @@ router.post('/',(req,res) =>{
     // res.send("University logged in");
     res.render('univMainView',{ title: 'Publish a new Diploma Supplement',
     message: 'Welcome user: ' + req.session.eID ,
-    university: req.session.eID});
+    university: req.session.eID,
+    base:process.env.BASE_URL});
   }else{
     res.send("wrong username password combination")
 
@@ -87,7 +91,7 @@ router.get('/logout',(req,res) =>{
 
 
 
- 
+
 
 
 

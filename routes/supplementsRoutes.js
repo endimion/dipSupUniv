@@ -20,7 +20,8 @@ router.get('/publish',sessionCheck,(req,res) =>{
   res.render('publishSupplementView',{ title: 'Publish a new Diploma Supplement',
   message: 'Welcome user: ' + req.session.eID ,
   supId: randomstring.generate(10),
-  university: req.session.eID});
+  university: req.session.eID,
+  base:process.env.BASE_URL});
 });
 
 
@@ -38,19 +39,22 @@ router.post('/publish',sessionCheck,(req,res) =>{
       if(req.session.userType === 'University'){
         res.render('univMainView',{ title: 'University Management Page',
         message: 'Welcome user: ' + req.session.eID  + ".\n Supplement Published Successfully!!",
-        university: req.session.eID});
+        university: req.session.eID,
+        base:process.env.BASE_URL});
       }else{
         if(req.session.userType === 'Student'){
           res.render('stdMainView',{ title: 'Publish a new Diploma Supplement',
           message: 'Welcome user: ' + req.session.userName  ,
-          stdId: req.session.eID});
+          stdId: req.session.eID,
+          base:process.env.BASE_URL});
         }
       }
   })
   .catch( err => {
     res.render('errorMessage',{ title: 'Ooops... an error occured!',
                 message: err.toString(),
-                stdId: req.session.eID});
+                stdId: req.session.eID,
+                base:process.env.BASE_URL});
   });
 });
 
@@ -63,18 +67,20 @@ router.get('/view',sessionCheck,(req,res) =>{
     .then(result => {
       res.render('viewSupplements',{ title: 'Published Supplements',
             message: 'Welcome user: ' + req.session.userName  , userType: req.session.userType,
-            supplements: result});
+            supplements: result,
+            base:process.env.BASE_URL});
     })
     .catch(err =>{
       res.render('errorMessage',{ title: 'Ooops... an error occured!',
                   message: err.toString(),
-                  stdId: req.session.eID});
+                  stdId: req.session.eID,
+                  base:process.env.BASE_URL});
     });
 });
 
 
 
- 
+
 
 router.get('/view/:dsHash',(req,res) =>{
   let userName = req.session.eID;
@@ -85,18 +91,22 @@ router.get('/view/:dsHash',(req,res) =>{
       .then(result => {
             // console.log("\nersult \n") ;
             // console.log(result);
-            res.render(result.view,result);
+            model = result;
+            model.base = process.env.BASE_URL;
+            res.render(result.view,model);
       })
       .catch(err =>{
             console.log(err);
             res.render('errorMessage',{ title: 'Ooops... an error occured!',
                         message: err.toString(),
-                        stdId: req.session.eID});
+                        stdId: req.session.eID,
+                        base:process.env.BASE_URL});
       });
   }else{
     res.render('loginAndRedirect',{ title: 'Login',
     message: 'Login to View Supplement',
-    supId: dsHash});
+    supId: dsHash,
+    base:process.env.BASE_URL});
   }
 });
 
@@ -192,7 +202,7 @@ router.get('/view/:dsHash',(req,res) =>{
               let supplement = JSON.parse(response);
               res.render('viewSingleSupplement',{ title: 'View Supplement',
               message: 'Welcome user: ' + req.session.eID , userType: req.session.userType,
-              supplement: supplement});
+              supplement: supplement,base:process.env.BASE_URL});
             })
             .catch(err =>{
               console.log("AN ERROR OCCURED!!! atempt:"+counter+"\n");
@@ -214,7 +224,7 @@ router.get('/view/:dsHash',(req,res) =>{
       }else{
         res.render('loginAndRedirect',{ title: 'Login',
         message: 'Login to View Supplement',
-        supId: dsHash});
+        supId: dsHash,base:process.env.BASE_URL});
       }
     });
 
