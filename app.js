@@ -8,6 +8,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session'); //warning The default server-side session storage, MemoryStore, is purposely not designed for a production environment.
                                             //compatible session stores https://github.com/expressjs/session#compatible-session-stores
+let FileStore = require('session-file-store')(session);
 const qr = require('./routes/qrCodeRoutes');
 const srvUtils = require('./utils/serverUtils.js');
 const basic = require('./basicFunctions');
@@ -24,6 +25,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(session({
+  store: new FileStore({}),
   name:'uniApp cookie',
   secret: 'keyboard univ',
   resave: false,
