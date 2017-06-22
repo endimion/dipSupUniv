@@ -8,16 +8,25 @@ const srvUtils = require('../utils/serverUtils.js');
 const supUtils = require('../utils/SupplementUtils.js');
 const qr = require('qr-image');
 const util = require('util');
+const signService = require('../service/SignService');
 
 exports.publishSupplement = function(owner, university, _id,name,surname){
   // console.log(owner + university + _id);
+
   return new Promise(function(resolve,reject){
-    let publishArgs = ['{"Owner":"'+owner+'", "Name":"'+name+'", "Surname":"'+surname+
-                          '",  "University":"'+university+'", "Authorized":[], "Id":"'+_id+'"}'];
+    let supplement = {
+        "Owner": owner,
+        "Name": name,
+        "Surname": surname,
+        "University": university,
+        "Authorized": [],
+        "Id" : _id
+    }
+    let supString = JSON.stringify(supplement);
+    let signature = signService.signHash(supUtils.generateHashString(supString))
+    supplement.Signature = signature;
 
-
-// '{"Owner":"'+ owner +'", "University":"'+university+'", "Name":"'+name+
-//                           '", "Surname":"'+surname+'","Authorized":[],"Id":"'+_id+'"}' ];
+    let publishArgs = [finalSupString];
     let _enrollAttr = [{name:'typeOfUser',value:'University'},{name:"eID",value:university.toString()}];
     let _invAttr = ['typeOfUser','eID'];
     let publishReq = {

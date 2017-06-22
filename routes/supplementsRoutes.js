@@ -13,7 +13,7 @@ const hfcService = require('../service/HfcService');
 const hash = require('hash.js');
 const sessionUtil = require('../utils/RooterUtils');
 const sessionCheck = sessionUtil.checkSessionEidandType;
-
+const signService = require('../service/SignService');
 
 router.get('/publish',sessionCheck,(req,res) =>{
 
@@ -33,6 +33,23 @@ router.post('/publish',sessionCheck,(req,res) =>{
   let _id = req.body.id;
   let name = req.body.name;
   let surname = req.body.surname;
+
+  // let supString = '{"Owner":"'+owner+'", "Name":"'+name+'", "Surname":"'+surname+
+  //                       '",  "University":"'+university+'", "Authorized":[], "Id":"'+_id+'"}';
+
+  // let supplement = {
+  //     "Owner": owner,
+  //     "Name": name,
+  //     "Surname": surname,
+  //     "University": university,
+  //     "Authorized": [],
+  //     "Id" : _id
+  // }
+  // let supString = JSON.stringify(supplement);
+  // console.log(supString);
+  // console.log(signService.signHash(supUtils.generateHashString(supString)));
+
+
   hfcService.publishSupplement(owner,university,_id,name,surname)
   .then( result => {
       //  res.send(result);
