@@ -25,8 +25,11 @@ exports.publishSupplement = function(owner, university, _id,name,surname){
     let supString = JSON.stringify(supplement);
     let signature = signService.signHash(supUtils.generateHashString(supString))
     supplement.Signature = signature;
-
+    let finalSupString = JSON.stringify(supplement);
     let publishArgs = [finalSupString];
+
+// '{"Owner":"'+ owner +'", "University":"'+university+'", "Name":"'+name+
+//                           '", "Surname":"'+surname+'","Authorized":[],"Id":"'+_id+'"}' ];
     let _enrollAttr = [{name:'typeOfUser',value:'University'},{name:"eID",value:university.toString()}];
     let _invAttr = ['typeOfUser','eID'];
     let publishReq = {
