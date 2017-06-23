@@ -210,7 +210,7 @@ exports.getPublicationRequests = function(userEid){
     let enrollAttr = [{name:'typeOfUser',value:'University'},{name:"eID",value:userEid}];
     let queryAttr = ['typeOfUser','eID'];
     let _args = [];
-    let testQ2 = new ChainCodeQuery(queryAttr, _args, basic.config.chaincodeID,"getPendingRequestByUniv",basic.query);
+    let testQ2 = new chainCodeQuery(queryAttr, _args, basic.config.chaincodeID,"getPendingRequestByUniv",basic.query);
     let testQfunc2 = testQ2.makeQuery.bind(testQ2);
     let success = function(response){
       resolve(JSON.parse(response));
