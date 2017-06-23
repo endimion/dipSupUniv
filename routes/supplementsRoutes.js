@@ -123,7 +123,7 @@ router.get('/requests',sessionCheck,(req,res) =>{
     res.render(
         'viewRequests',{ title: 'Ooops... an error occured!',
         message: "Pending Requests",
-        requests: JSON.parse(result),
+        requests: result,
         base:process.env.BASE_URL
       });
   })
