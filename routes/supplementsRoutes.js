@@ -119,7 +119,13 @@ router.get('/requests',sessionCheck,(req,res) =>{
   let userType = req.session.userType;
   hfcService.getPublicationRequests(userName)
   .then(result => {
-     res.send(result);
+    //  res.send(result);
+    res.render({
+        'viewRequests',{ title: 'Ooops... an error occured!',
+        message: "Pending Requests",
+        requests: JSON.parse(result),
+        base:process.env.BASE_URL}
+      });
   })
   .catch(err =>{
     console.log(err);

@@ -1,0 +1,121 @@
+extends layout
+
+
+block content
+  .main.container
+    .row
+      .col.l12.m12.col-md-offset-3
+        h3.display-4.m-b-2= title
+    .row
+      .col.l12.md12.col-md-offset-3
+        div.col-m-12=message
+    .row
+      .col.s12.m6
+        each val in requests
+          .card
+            .card-content#textContent
+              span.card-title
+              p Name: #{val.Name}
+              p eID:  #{val.Eid}
+              p Email:#{val.Email}
+              p University Id: #{val.UniId}
+              p University Name: #{val.University}
+            .card-content(id="svgContent"+val.Id style={display: 'none', background: 'white',width:'16em'})    
+                  
+            .card-action
+              div.row.card-content
+                if userType === 'Student'
+                  div.col.s12.m6#userType(style="position: relative; ")
+                    a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3(href="edit/"+val.Id) 
+                      i.material-icons edit
+                  div.col.s12.m12(style="position: relative; ")
+                    <div class="fixed-action-btn horizontal click-to-toggle" style="position: absolute; right: 24px;bottom:0;">
+                      <a class="btn-floating btn-large red">
+                        <i class="material-icons">share</i>
+                      </a>
+                      <ul>
+                        //- <li><a class="btn-floating red" style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons">insert_chart</i></a></li>
+                        <li>
+                          a.btn-floating.yellow.darken-1.modal-trigger(href='#modal' + val.Id, style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;")
+                            <i class="material-icons">mail</i>
+                        </li>
+                        //- <li><a class="btn-floating green" style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons">publish</i></a></li>
+                        <li>
+                          a.btn-floating.blue.darken-1.modal-trigger(href="#modalQR"+ val.Id,  style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;") 
+                            <i class="material-icons">dashboard</i>
+                        </li>
+                      </ul>
+                    </div>
+                  <!-- Modal Share by Email Structure -->
+                   div.modal(id="modal"+val.Id)
+                    <div class="modal-content">
+                      <h4>Share the DiplomaSupplement #{val.Id}</h4>
+                      p.modalMessage Send a sharable link via email 
+                      form.sendEmail(action='#')
+                        div.form-group
+                          label(for='email') Recipient Email:
+                          input.form-control(id='email'+val.Id, type='email', placeholder='name@email.com' name='email')
+                        div.form-group
+                          input.form-control(id='supId'+val.Id,type='hidden',  name='supId', value=val.Id)
+                        a.waves-effect.waves-green.btn-flat(onclick='sendEmail("email'+val.Id+'",'+'"supId'+val.Id+'","'+val.Id+'")') Send  
+                      include preloader  
+                  </div>
+                  <!-- Modal Share by QE Structure -->
+                   div.modal(id="modalQR"+val.Id)
+                    <div class="modal-content">
+                      <h4>Share the DiplomaSupplement #{val.Id} </h4>
+                       p.modalMessage Generate a QR code you can insert in your CV tha only the email owner can view!
+                      form.sendEmail(action='#')
+                        div.form-group
+                          label(for='email') Recipient Email:
+                          input.form-control(id='qrEmail'+val.Id, type='email', placeholder='name@email.com' name='email')
+                        div.form-group
+                          input.form-control(id='qrSupId'+val.Id,type='hidden',  name='qrSupId', value=val.Id)
+                        a.waves-effect.waves-green.btn-flat(onclick='makeQRcode("qrEmail'+val.Id+'",'+'"qrSupId'+val.Id+'","'+val.Id+'")') Generate QR link  
+                      div.qrCode(style="display:none")
+                        div.qrMessage(style="width:60%; float:right")
+                          p Save this image and add it to your Cv
+                          p Upon scanning it the recipient will recieve a code by email
+                          p that will allow them to view your Diploma Supplement
+                        //- div(id="qrImage"+val.Id,style="width:30%;float:left")
+                        canvas(id="canvas"+val.Id ,style="width:30%;float:left; display:none")
+                        div(id="imgContainer" +val.Id,style="width:30%;float:left;margin: 0.2em 0 1em 0;")
+                      include preloader  
+                  </div>
+
+   
+                else 
+                  a.btn-floating.btn-large.waves-effect.waves-light.red.disabled(href="/edit") 
+                    i.material-icons edit
+                
+              
+                
+                    
+
+                //- a.btn-floating.btn-large.waves-effect.waves-light.red(style={float:'right'} onclick='getAndDisplayOrHideQr("'+val.Id+'","svgContent' + val.Id + '")') 
+                //-   i.material-icons dashboard
+    .row
+      .col.l6.m6.col-md-offset-3
+        a.btn.btn-primary(href="/login") Back 
+
+
+  script(type="text/javascript" src="http://canvg.github.io/canvg/rgbcolor.js")
+  script(type="text/javascript" src="http://canvg.github.io/canvg/StackBlur.js")
+  script(type="text/javascript" src="http://canvg.github.io/canvg/canvg.js")
+  script
+    include ../scripts/qrScript.js
+  script
+    include ../scripts/emailScript.js
+  script.
+    var onModalHide = function() {
+      $(".sendEmail").show();
+      $(".modalMessage").show();
+      $(".preloader").hide();
+      $(".qrCode").hide();
+      
+    };
+    $(document).ready(function(){
+        $('.modal').modal({
+            complete : onModalHide  
+        });
+    });
