@@ -120,11 +120,11 @@ router.get('/requests',sessionCheck,(req,res) =>{
   hfcService.getPublicationRequests(userName)
   .then(result => {
     //  res.send(result);
-    res.render({
+    res.render(
         'viewRequests',{ title: 'Ooops... an error occured!',
         message: "Pending Requests",
         requests: JSON.parse(result),
-        base:process.env.BASE_URL}
+        base:process.env.BASE_URL
       });
   })
   .catch(err =>{
