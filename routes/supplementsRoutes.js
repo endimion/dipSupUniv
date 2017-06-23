@@ -114,7 +114,7 @@ router.get('/view/:dsHash',(req,res) =>{
 
 
 
-router.get('/view/requests',sessionCheck,(req,res) =>{
+router.get('/requests',sessionCheck,(req,res) =>{
   let userName = req.session.eID;
   let userType = req.session.userType;
   hfcService.getPublicationRequests(userName)
