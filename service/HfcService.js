@@ -215,7 +215,7 @@ exports.getPublicationRequests = function(userEid){
     let success = function(response){
       resolve(JSON.parse(response));
     };
-    makeHfcCall(testQfunc2,10,success,reject,userEid,_enrollAttr)();
+    makeHfcCall(testQfunc2,10,success,reject,userEid,enrollAttr)();
   });
 };
 
