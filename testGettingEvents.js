@@ -40,7 +40,6 @@ process.on('exit', function() {
 
 var evHub = chain.getEventHub();
 var chaincodeID=  fs.readFileSync(__dirname + "/chaincodeIDLocalHost", 'utf8');
-evHub.registerChaincodeEvent(chaincodeID, "evtPubReq", function(event) {
-  console.log("event detected");
-  console.log(util.format("Custom publication event : %j\n", event.payload.toString()));
+evHub.registerChaincodeEvent(chaincodeID, "evtsender", function(event) {
+  console.log(util.format("Custom event received, payload: %j\n", event.payload.toString()));
 });
