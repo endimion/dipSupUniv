@@ -68,14 +68,18 @@ router.get('/prepublish',sessionCheck,(req,res) =>{
   let surname = (names.length > 1)?names[1]:names[0];
   let univ = req.query.university;
 
-  res.render('publishSupplementView',{ title: 'Publish a new Diploma Supplement',
+  let data = { title: 'Publish a new Diploma Supplement',
   message: '' ,
   supId: randomstring.generate(10),
   university: univ,
   ownerEid: eId,
   ownerFirstName : name,
   ownerLastName : surname,
-  base:process.env.BASE_URL});
+  base:process.env.BASE_URL}
+
+  console.log(data);
+
+  res.render('publishSupplementView',data);
 
 });
 
