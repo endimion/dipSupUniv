@@ -61,7 +61,7 @@ router.post('/publish',sessionCheck,(req,res) =>{
 
 
 
-router.post('/prepublish',sessionCheck,(req,res) =>{
+router.get('/prepublish',sessionCheck,(req,res) =>{
   let eId = req.query.eID;
   let names = req.query.name.split(" ");
   let name = names[0];
