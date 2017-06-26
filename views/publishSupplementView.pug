@@ -14,13 +14,22 @@ block content
         form(method='POST' action='publish')
           div.form-group
             label(for='owner') Owner eID:
-            input#owner.form-control(type='text', placeholder='eid' name='owner' value=ownerEid)
+            if ownerEid !== undefined
+              input#owner.form-control(type='text', placeholder='eid' name='owner' value=ownerEid readonly)
+            else
+              input#owner.form-control(type='text', placeholder='eid' name='owner' value=ownerEid )
           div.form-group
             label(for='name') Name:
-            input#name.form-control(type='text', placeholder='first name' name='name' value=ownerFirstName)
+            if ownerFirstName !== undefined
+              input#name.form-control(type='text', placeholder='first name' name='name' value=ownerFirstName readonly)
+            else
+              input#name.form-control(type='text', placeholder='first name' name='name' value=ownerFirstName)
           div.form-group
             label(for='surname') Surname:
-            input#surname.form-control(type='text', placeholder='last name' name='surname' value=ownerLastName)
+            if ownerFirstName !== undefined
+              input#surname.form-control(type='text', placeholder='last name' name='surname' value=ownerLastName readonly)
+            else
+              input#surname.form-control(type='text', placeholder='last name' name='surname' value=ownerLastName)
           div.form-group
             label(for='university') University:
             input#university.form-control(type='text', value=university name='university' readonly)
