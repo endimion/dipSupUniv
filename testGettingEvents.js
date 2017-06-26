@@ -15,7 +15,7 @@ process.env.GOPATH = __dirname;
 //      var hfc = require('hfc');
 var hfc = require('hfc');
 var util = require('util');
-
+var fs = require('fs');
 // Create a client chain.
 // The name can be anything as it is only used internally.
 var chain = hfc.newChain("targetChain");
@@ -39,6 +39,7 @@ process.on('exit', function() {
 
 
 let evntHub = chain.getEventHub();
-evntHub.registerChaincodeEvent(invReq.chaincodeID, "evtPubReq", function(event) {
+let chaincodeID=  fs.readFileSync(__dirname + "/chaincodeIDLocalHost", 'utf8'),
+evntHub.registerChaincodeEvent(chaincodeID, "evtPubReq", function(event) {
   console.log(util.format("Custom publication event : %j\n", event.payload.toString()));
 });
