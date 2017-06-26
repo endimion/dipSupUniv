@@ -61,6 +61,28 @@ router.post('/publish',sessionCheck,(req,res) =>{
 
 
 
+router.post('/prepublish',sessionCheck,(req,res) =>{
+  let eId = req.query.eID;
+  let names = req.query.name.split(" ");
+  let name = names[0];
+  let surname = (names.length > 1)?names[1]:names[0];
+  let univ = req.query.university;
+
+  res.render('publishSupplementView',{ title: 'Publish a new Diploma Supplement',
+  message: '' ,
+  supId: randomstring.generate(10),
+  university: univ,
+  ownerEid: eId,
+  ownerFirstName : name,
+  ownerLastName : surname,
+  base:process.env.BASE_URL});
+
+});
+
+
+
+
+
 router.get('/view',sessionCheck,(req,res) =>{
   let userEid = req.session.eID;
   let userType =  req.session.userType;
