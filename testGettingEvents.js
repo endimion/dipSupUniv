@@ -40,6 +40,14 @@ process.on('exit', function() {
 
 var evHub = chain.getEventHub();
 var chaincodeID=  fs.readFileSync(__dirname + "/chaincodeIDLocalHost", 'utf8');
-evHub.registerChaincodeEvent(chaincodeID, "evtsender", function(event) {
+let envtId = evHub.registerChaincodeEvent(chaincodeID, "evtsender", function(event) {
   console.log(util.format("Custom event received, payload: %j\n", event.payload.toString()));
+  let eventJSON = JSON.parse(event.payload.toString());
+  let eventBODY = eventJSON.Body;
+  let eventTXID = eventJSON.TxId;
+  console.log(eventJSON);
+  console.log(eventBODY);
+  console.log(eventTXID);
+
+  evHub.unregisterChaincodeEvent(envtId);
 });
